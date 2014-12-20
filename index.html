@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 
-<title>看你有多色﹣暴走微遊戲</title>
-<meta name="description" content="看你有多色,色弱測試遊戲,看看你的眼睛能夠識別出多少種顏色" />
-<meta name="keywords" content="看你有多色,色弱測試,手機遊戲,小遊戲" />
+<title>Color Cognition</title>
+<meta name="description" content="Locate the block with a different color" />
+<meta name="keywords" content="logic, color, game" />
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
@@ -13,8 +12,8 @@
         <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
         <meta http-equiv="expires" content="-1">
         <meta property="og:url" content="http://game.ioxapp.com/color/" /> 
-        <meta property="og:title" content="看你有多色" />
-        <meta property="og:description" content="找出所有色塊里顏色不同的一個!" /> 
+        <meta property="og:title" content="Color Cognition" />
+        <meta property="og:description" content="Locate the block with a different color!" /> 
         <meta property="og:image" content="http://game.ioxapp.com/color/icon.png" /> 
         <link rel="stylesheet" href="assets/css/m.css">
 <script>
@@ -29,6 +28,7 @@
   ga('send', 'pageview');
 
 </script>
+    <script src="/Users/rbdrinkwater/Desktop/app/color/www/assets/js"></script>
     </head>
     <body>
         <div class="grid">
@@ -36,31 +36,18 @@
                 loading...
             </div>
             <div class="page hide" id="index">
-                <h1>看你有多色</h1>
+                <h1>Color Cognition</h1>
 
-                <div id="help">找出所有色塊里顏色不同的一個<br>Click on the tile that has a different color</div>
+                <div id="help">Click on the tile that has a different color</div>
                 <div class="btns">
                     <button data-type="color" class="btn play-btn">
                         PLAY
                     </button>
                     <br>
                     <div ALIGN=center>
-                        <div id="ad1" style="display:none;">
-                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                            <ins class="adsbygoogle"
-                                style="display:inline-block;width:468px;height:60px"
-                                data-ad-client="ca-pub-9015222295118017"
-                                data-ad-slot="7509917232"></ins>
-                            <script>
-                                (adsbygoogle = window.adsbygoogle || []).push({});
-                            </script>
-                        </div>
-                        <a href="https://play.google.com/store/apps/details?id=com.ioxapp.game.ragegame" class="game-main">
-                            <img src="http://m.ioxapp.com/img/badge_android.png" alt=""  />
-                        </a>
-                        <a href="https://www.facebook.com/rageminigame" class="game-main">
-                            <img src="http://m.ioxapp.com/img/facebook.png" alt=""  />
-                        </a>
+                        <script>show_ad();</script>
+                        <script>show_android_app();</script>
+                        <script>show_facebook_link();</script>
                     </div>
                     <!-- <button data-type="pic" class="btn play-btn">美图版</button> -->
                 </div>
@@ -69,7 +56,7 @@
             <div class="page hide" id="room">
                 <header>
                     <span class="lv">
-                        得分：
+                        Score：
                         <em>
                             1
                         </em>
@@ -87,39 +74,26 @@
                 <div class="inner">
                     <div class="content share">
                         <p>
-                            經鑒定，您是：
+                            Score:
                         </p>
                         <h3></h3>
                         <div class="btn-wrap">
-                            <a class="btn btn-boyaa" href="#" onclick="javascript:do_share();">Share</a>
+                            <a class="btn btn-boyaa" href="index.html#" onclick="javascript:do_share();">Share</a>
                             <button class="btn btn-restart">
                                 Play Again
                             </button>
-                            <a href="http://game.ioxapp.com/memtest/" class="btn btn-boyaa" target="_blank">Memory test</a>
+                            <a href="http://www.kunzmainali.com" class="btn btn-boyaa" target="_blank">Developer</a>
                         </div>
                         <br>
                         <div ALIGN=center>
-                            <div id="ad2" style="display:none;">
-                                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                                <ins class="adsbygoogle"
-                                    style="display:inline-block;width:468px;height:60px"
-                                    data-ad-client="ca-pub-9015222295118017"
-                                    data-ad-slot="7509917232"></ins>
-                                <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                                </script>
-                            </div>
-		<a href="https://play.google.com/store/apps/details?id=com.ioxapp.game.ragegame" class="game-main">
-			 <img src="http://m.ioxapp.com/img/badge_android.png" alt=""  />
-		</a>
-		<a href="https://www.facebook.com/rageminigame" class="game-main">
-			 <img src="http://m.ioxapp.com/img/facebook.png" alt=""  />
-		</a>
-			</div>
+                            <script>show_ad();</script>
+                            <script>show_android_app();</script>
+                            <script>show_facebook_link();</script>
+			            </div>
                     </div>
                     <div class="content gameover">
                         <p>
-                            經鑒定，您是：
+                            Score:
                         </p>
                         <h3></h3>
                         <div class="btn-wrap">
@@ -127,7 +101,7 @@
                                 Play Again
                             </button>
                             
-                            <a href="http://game.ioxapp.com/" class="btn btn-boyaa" target="_blank">More games</a>
+                            <a href="http://www.kunzmainali.com" class="btn btn-boyaa" target="_blank">Developer</a>
                             <!--
                             <a href="https://www.facebook.com/rageminigame" class="btn btn-boyaa" target="_blank">
                                 FaceBook
@@ -136,34 +110,21 @@
                         </div>
                         <br>
                         <div ALIGN=center>
-                            <div id="ad3" style="display:none;">
-                                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                                <ins class="adsbygoogle"
-                                    style="display:inline-block;width:468px;height:60px"
-                                    data-ad-client="ca-pub-9015222295118017"
-                                    data-ad-slot="7509917232"></ins>
-                                <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                                </script>
-                            </div>
-		<a href="https://play.google.com/store/apps/details?id=com.ioxapp.game.ragegame" class="game-main">
-			 <img src="http://m.ioxapp.com/img/badge_android.png" alt=""  />
-		</a>
-		<a href="https://www.facebook.com/rageminigame" class="game-main">
-			 <img src="http://m.ioxapp.com/img/facebook.png" alt=""  />
-		</a>
-			</div>
+                            <script>show_ad();</script>
+                            <script>show_android_app();</script>
+                            <script>show_facebook_link();</script>
+			            </div>
                     </div>
                     <div class="content pause">
                         <h3>
-                            遊戲暫停
+                            Pause Game
                         </h3>
                         <div class="btn-wrap">
                             <button class="btn btn-resume">
                                 CONTINUE
                             </button>
                             
-                            <a href="http://game.ioxapp.com/" class="btn btn-boyaa" target="_blank">More games</a>
+                            <a href="http://www.kunzmainali.com" class="btn btn-boyaa" target="_blank">Developer</a>
                            
                             <!--
                             <a href="https://www.facebook.com/rageminigame" class="btn btn-boyaa" target="_blank">
@@ -173,23 +134,10 @@
                         </div>
                         <br>
                         <div ALIGN=center>
-                            <div id="ad4" style="display:none;">
-                                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                                <ins class="adsbygoogle"
-                                    style="display:inline-block;width:468px;height:60px"
-                                    data-ad-client="ca-pub-9015222295118017"
-                                    data-ad-slot="7509917232"></ins>
-                                <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                                </script>
-                            </div>
-		<a href="https://play.google.com/store/apps/details?id=com.ioxapp.game.ragegame" class="game-main">
-			 <img src="http://m.ioxapp.com/img/badge_android.png" alt=""  />
-		</a>
-		<a href="https://www.facebook.com/rageminigame" class="game-main">
-			 <img src="http://m.ioxapp.com/img/facebook.png" alt=""  />
-		</a>
-			</div>
+                            <script>show_ad();</script>
+                            <script>show_android_app();</script>
+                            <script>show_facebook_link();</script>
+			            </div>
                     </div>
                 </div>
             </div>
@@ -224,7 +172,7 @@
   }(document, 'script', 'facebook-jssdk'));
 
   function fb_share() {    
-    var msg = Game.lastLv>20?"鑑定結果，你是【"+Game.lastGameTxt+"】！\要不要通知下小伙伴們呢？":"要不要告訴小伙伴這個好玩的遊戲？";
+    var msg = Game.lastLv>20?"Score，You are【"+Game.lastGameTxt+"】！\要不要通知下小伙伴們呢？":"This round is over";
     if (confirm(msg)){
       window.Game.share();
     }
@@ -233,32 +181,14 @@
     var caption = Game.lastLv>0?"我闖過"+(Game.lastLv+1)+"關，擊敗"+Game.lastGamePercent+"%的人！我是【"+Game.lastGameTxt+"】！不服來戰！":shareData.tTitle;
     FB.ui({
         method: 'feed',
-        name: '看看你有多色',
+        name: 'Color Cognition',
         link: 'http://game.ioxapp.com/color/?f=fb_app',
         picture: 'http://game.ioxapp.com/color/icon.png',
         caption: caption,
-        description: '找出所有色塊里顏色不同的一個!',
+        description: 'Locate the block with a different color!',
       }, function(response){});
   }
 </script>
 </html>
 <script src="assets/js/libs.min.js"></script>
 <script src="assets/js/main.min.js"></script>
-<script>
-    var ua = navigator.userAgent;
-    var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
-    ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/),
-    iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
-    android = ua.match(/(Android);?[\s\/]+([\d.]+)?/),
-    wp = ua.match(/Windows Phone ([\d.]+)/),
-    tablet = ua.match(/Tablet/),
-    touch = ua.match(/Touch/),
-    mobile = ua.match(/Mobile/),
-    phone = ua.match(/Phone/);
-    if (!ipad && !ipod && !iphone && !android && !wp && !tablet && !touch && !mobile && !phone) {
-        $("#ad1").show();
-        $("#ad2").show();
-        $("#ad3").show();
-        $("#ad4").show();
-    }
-</script>
