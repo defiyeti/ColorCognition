@@ -172,13 +172,13 @@
   }(document, 'script', 'facebook-jssdk'));
 
   function fb_share() {    
-    var msg = Game.lastLv>20?"Score，You are【"+Game.lastGameTxt+"】！\要不要通知下小伙伴們呢？":"This round is over";
+    var msg = Game.lastLv>20?"Score，You made it to "【+Game.lastLv+1]:"This round is over";
     if (confirm(msg)){
       window.Game.share();
     }
   }
   function do_share() {
-    var caption = Game.lastLv>0?"我闖過"+(Game.lastLv+1)+"關，擊敗"+Game.lastGamePercent+"%的人！我是【"+Game.lastGameTxt+"】！不服來戰！":shareData.tTitle;
+    var caption = Game.lastLv>0?"I got past"+(Game.lastLv+1)+"and beat"+Game.lastGamePercent+"% of People":shareData.tTitle;
     FB.ui({
         method: 'feed',
         name: 'Color Cognition',
