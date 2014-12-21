@@ -1,12 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.cordova.hellocordova" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>HelloCordova</name>
+    <name>ColorCognition</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
-    </description>
+    Color Cognition is a game that tests how well you can spot different colors. The game is based off of a popular game played in Chinese arcades and is currently being developed for iOS and Android.
+   </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
-    <content src="index.html" />
+<platform name="ios">
+    <!-- images are determined by width and height. The following are supported -->
+    <splash src="Default.png" width="320" height="480"/>
+    <splash src="Default.png" width="640" height="960"/>
+    <splash src="Default.png" width="768" height="1024"/>
+    <splash src="Default.png" width="1536" height="2048"/>
+    <splash src="Default.png" width="1024" height="768"/>
+    <splash src="Default.png" width="2048" height="1536"/>
+    <splash src="Default.png" width="640" height="1136"/>
+</platform>
+	<content src="index.html" />
     <access origin="*" />
 </widget>

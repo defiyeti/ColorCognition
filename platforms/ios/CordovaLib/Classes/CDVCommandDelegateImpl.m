@@ -31,14 +31,7 @@
     if (self != nil) {
         _viewController = viewController;
         _commandQueue = _viewController.commandQueue;
-        
-        NSError* err = nil;
-        _callbackIdPattern = [NSRegularExpression regularExpressionWithPattern:@"[^A-Za-z0-9._-]" options:0 error:&err];
-        if (err != nil) {
-            // Couldn't initialize Regex
-            NSLog(@"Error: Couldn't initialize regex");
-            _callbackIdPattern = nil;
-        }
+        _callbackIdPattern = nil;
     }
     return self;
 }
@@ -104,11 +97,21 @@
 
 - (BOOL)isValidCallbackId:(NSString*)callbackId
 {
-    
-    if (callbackId == nil || _callbackIdPattern == nil) {
+    NSError* err = nil;
+
+    if (callbackId == nil) {
         return NO;
     }
 
+    // Initialize on first use
+    if (_callbackIdPattern == nil) {
+        // Catch any invalid characters in the callback id.
+        _callbackIdPattern = [NSRegularExpression regularExpressionWithPattern:@"[^A-Za-z0-9._-]" options:0 error:&err];
+        if (err != nil) {
+            // Couldn't initialize Regex; No is safer than Yes.
+            return NO;
+        }
+    }
     // Disallow if too long or if any invalid characters were found.
     if (([callbackId length] > 100) || [_callbackIdPattern firstMatchInString:callbackId options:0 range:NSMakeRange(0, [callbackId length])]) {
         return NO;

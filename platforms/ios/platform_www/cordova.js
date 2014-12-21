@@ -1,5 +1,5 @@
 // Platform: ios
-// 91157c2e1bf3eb098c7e2ab31404e895ccb0df2a
+// 3.6.3
 /*
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@
  under the License.
 */
 ;(function() {
-var PLATFORM_VERSION_BUILD_LABEL = '3.7.0';
+var CORDOVA_JS_BUILD_LABEL = '3.6.3';
 // file: src/scripts/require.js
 
 /*jshint -W079 */
@@ -175,8 +175,7 @@ function createEvent(type, data) {
 var cordova = {
     define:define,
     require:require,
-    version:PLATFORM_VERSION_BUILD_LABEL,
-    platformVersion:PLATFORM_VERSION_BUILD_LABEL,
+    version:CORDOVA_JS_BUILD_LABEL,
     platformId:platform.id,
     /**
      * Methods to add/remove your own addEventListener hijacking on document + window.
@@ -263,7 +262,11 @@ var cordova = {
      * Called by native code when returning successful result from an action.
      */
     callbackSuccess: function(callbackId, args) {
-        cordova.callbackFromNative(callbackId, true, args.status, [args.message], args.keepCallback);
+        try {
+            cordova.callbackFromNative(callbackId, true, args.status, [args.message], args.keepCallback);
+        } catch (e) {
+            console.log("Error in success callback: " + callbackId + " = "+e);
+        }
     },
 
     /**
@@ -272,33 +275,29 @@ var cordova = {
     callbackError: function(callbackId, args) {
         // TODO: Deprecate callbackSuccess and callbackError in favour of callbackFromNative.
         // Derive success from status.
-        cordova.callbackFromNative(callbackId, false, args.status, [args.message], args.keepCallback);
+        try {
+            cordova.callbackFromNative(callbackId, false, args.status, [args.message], args.keepCallback);
+        } catch (e) {
+            console.log("Error in error callback: " + callbackId + " = "+e);
+        }
     },
 
     /**
      * Called by native code when returning the result from an action.
      */
-    callbackFromNative: function(callbackId, isSuccess, status, args, keepCallback) {
-        try {
-            var callback = cordova.callbacks[callbackId];
-            if (callback) {
-                if (isSuccess && status == cordova.callbackStatus.OK) {
-                    callback.success && callback.success.apply(null, args);
-                } else {
-                    callback.fail && callback.fail.apply(null, args);
-                }
-
-                // Clear callback if not expecting any more results
-                if (!keepCallback) {
-                    delete cordova.callbacks[callbackId];
-                }
+    callbackFromNative: function(callbackId, success, status, args, keepCallback) {
+        var callback = cordova.callbacks[callbackId];
+        if (callback) {
+            if (success && status == cordova.callbackStatus.OK) {
+                callback.success && callback.success.apply(null, args);
+            } else if (!success) {
+                callback.fail && callback.fail.apply(null, args);
             }
-        }
-        catch (err) {
-            var msg = "Error in " + (isSuccess ? "Success" : "Error") + " callbackId: " + callbackId + " : " + err;
-            console && console.log && console.log(msg);
-            cordova.fireWindowEvent("cordovacallbackerror", { 'message': msg });
-            throw err;
+
+            // Clear callback if not expecting any more results
+            if (!keepCallback) {
+                delete cordova.callbacks[callbackId];
+            }
         }
     },
     addConstructor: function(func) {
@@ -840,20 +839,15 @@ var cordova = require('cordova'),
     commandQueue = [], // Contains pending JS->Native messages.
     isInContextOfEvalJs = 0;
 
-function createExecIframe(src, unloadListener) {
+function createExecIframe() {
     var iframe = document.createElement("iframe");
     iframe.style.display = 'none';
-    // Both the unload listener and the src must be set before adding the iframe
-    // to the document in order to avoid race conditions. Callbacks from native
-    // can happen within the appendChild() call!
-    iframe.onunload = unloadListener;
-    iframe.src = src;
     document.body.appendChild(iframe);
     return iframe;
 }
 
 function createHashIframe() {
-    var ret = createExecIframe('about:blank');
+    var ret = createExecIframe();
     // Hash changes don't work on about:blank, so switch it to file:///.
     ret.contentWindow.history.replaceState(null, null, 'file:///#');
     return ret;
@@ -924,8 +918,15 @@ function convertMessageToArgsNativeToJs(message) {
 }
 
 function iOSExec() {
+    // Use XHR for iOS 5 to work around a bug in -webkit-scroll.
+    // Use IFRAME_NAV elsewhere since it's faster and XHR bridge
+    // seems to have bugs in newer OS's (CB-3900, CB-3359, CB-5457, CB-4970, CB-4998, CB-5134)
     if (bridgeMode === undefined) {
-        bridgeMode = jsToNativeModes.IFRAME_NAV;
+        if (navigator.userAgent) {
+            bridgeMode = navigator.userAgent.indexOf(' 5_') == -1 ? jsToNativeModes.IFRAME_NAV: jsToNativeModes.XHR_NO_PAYLOAD;
+        } else {
+            bridgeMode = jsToNativeModes.IFRAME_NAV;
+        }
     }
 
     if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.cordova && window.webkit.messageHandlers.cordova.postMessage) {
@@ -1016,7 +1017,7 @@ function pokeNativeViaXhr() {
     // Add a timestamp to the query param to prevent caching.
     execXhr.open('HEAD', "/!gap_exec?" + (+new Date()), true);
     if (!vcHeaderValue) {
-        vcHeaderValue = /.*\((.*)\)$/.exec(navigator.userAgent)[1];
+        vcHeaderValue = /.*\((.*)\)/.exec(navigator.userAgent)[1];
     }
     execXhr.setRequestHeader('vc', vcHeaderValue);
     execXhr.setRequestHeader('rc', ++requestCount);
@@ -1026,11 +1027,6 @@ function pokeNativeViaXhr() {
     execXhr.send(null);
 }
 
-function onIframeUnload() {
-    execIframe = null;
-    setTimeout(pokeNativeViaIframe, 0);
-}
-
 function pokeNativeViaIframe() {
     // CB-5488 - Don't attempt to create iframe before document.body is available.
     if (!document.body) {
@@ -1038,7 +1034,6 @@ function pokeNativeViaIframe() {
         return;
     }
     if (bridgeMode === jsToNativeModes.IFRAME_HASH_NO_PAYLOAD || bridgeMode === jsToNativeModes.IFRAME_HASH_WITH_PAYLOAD) {
-        // TODO: This bridge mode doesn't properly support being removed from the DOM (CB-7735)
         execHashIframe = execHashIframe || createHashIframe();
         // Check if they've removed it from the DOM, and put it back if so.
         if (!execHashIframe.contentWindow) {
@@ -1052,15 +1047,12 @@ function pokeNativeViaIframe() {
         }
         execHashIframe.contentWindow.location.hash = hashValue;
     } else {
+        execIframe = execIframe || createExecIframe();
         // Check if they've removed it from the DOM, and put it back if so.
-        if (execIframe && execIframe.contentWindow) {
-            // Listen for unload, since it can happen (CB-7735) that the iframe gets
-            // removed from the DOM before it gets a chance to poke the native side.
-            execIframe.contentWindow.onunload = onIframeUnload;
-            execIframe.src = 'gap://ready';
-        } else {
-            execIframe = createExecIframe('gap://ready', onIframeUnload);
+        if (!execIframe.contentWindow) {
+            execIframe = createExecIframe();
         }
+        execIframe.src = "gap://ready";
     }
 }
 
@@ -1078,10 +1070,6 @@ iOSExec.setJsToNativeBridgeMode = function(mode) {
 };
 
 iOSExec.nativeFetchMessages = function() {
-    // Stop listing for window detatch once native side confirms poke.
-    if (execIframe && execIframe.contentWindow) {
-        execIframe.contentWindow.onunload = null;
-    }
     // Each entry in commandQueue is a JSON string already.
     if (!commandQueue.length) {
         return '';
@@ -1152,7 +1140,6 @@ var cordova = require('cordova');
 var modulemapper = require('cordova/modulemapper');
 var platform = require('cordova/platform');
 var pluginloader = require('cordova/pluginloader');
-var utils = require('cordova/utils');
 
 var platformInitChannelsArray = [channel.onNativeReady, channel.onPluginsReady];
 
@@ -1184,19 +1171,11 @@ function replaceNavigator(origNavigator) {
         for (var key in origNavigator) {
             if (typeof origNavigator[key] == 'function') {
                 newNavigator[key] = origNavigator[key].bind(origNavigator);
-            } 
-            else {
-                (function(k) {
-                    utils.defineGetterSetter(newNavigator,key,function() {
-                        return origNavigator[k];
-                    });
-                })(key);
             }
         }
     }
     return newNavigator;
 }
-
 if (window.navigator) {
     window.navigator = replaceNavigator(window.navigator);
 }
@@ -1277,7 +1256,6 @@ define("cordova/init_b", function(require, exports, module) {
 var channel = require('cordova/channel');
 var cordova = require('cordova');
 var platform = require('cordova/platform');
-var utils = require('cordova/utils');
 
 var platformInitChannelsArray = [channel.onDOMContentLoaded, channel.onNativeReady];
 
@@ -1312,13 +1290,6 @@ function replaceNavigator(origNavigator) {
         for (var key in origNavigator) {
             if (typeof origNavigator[key] == 'function') {
                 newNavigator[key] = origNavigator[key].bind(origNavigator);
-            } 
-            else {
-                (function(k) {
-                    utils.defineGetterSetter(newNavigator,key,function() {
-                        return origNavigator[k];
-                    });
-                })(key);
             }
         }
     }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F24F8D6B-EF71-4A3F-B0BA-0526AE442ED2</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ColorCognition</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FF3A5D802EF3E2A1297616CD1A972B7E292D0C56</key>
+		<string>github.com:kunzmainali/ColorCognition.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>platforms/ios/ColorCognition.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FF3A5D802EF3E2A1297616CD1A972B7E292D0C56</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:kunzmainali/ColorCognition.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FF3A5D802EF3E2A1297616CD1A972B7E292D0C56</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FF3A5D802EF3E2A1297616CD1A972B7E292D0C56</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ColorCognition-ios</string>
+		</dict>
+	</array>
+</dict>
+</plist>

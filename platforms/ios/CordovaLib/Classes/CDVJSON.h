@@ -27,5 +27,4 @@
 
 @interface NSString (CDVJSONSerializing)
 - (id)JSONObject;
-- (id)JSONFragment;
 @end
