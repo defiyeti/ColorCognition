@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Color Cognition</title>
+<meta name="description" content="Locate the block with a different color" />
+<meta name="keywords" content="logic, color, game" />
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+        <meta http-equiv="expires" content="-1">
+        <meta property="og:url" content="http://game.ioxapp.com/color/" /> 
+        <meta property="og:title" content="Color Cognition" />
+        <meta property="og:description" content="Locate the block with a different color!" /> 
+        <meta property="og:image" content="http://game.ioxapp.com/color/icon.png" /> 
+        <link rel="stylesheet" href="assets/css/m.css">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53684223-1', 'auto');
+  ga('require', 'displayfeatures');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script>
+    <script src="/Users/rbdrinkwater/Desktop/app/color/www/assets/js"></script>
+    </head>
+    <body>
+        <div class="grid">
+            <div class="page hide" id="loading">
+                loading...
+            </div>
+            <div class="page hide" id="index">
+                <h1>Color Cognition</h1>
+
+                <div id="help">Click on the tile that has a different color</div>
+                <div class="btns">
+                    <button data-type="color" class="btn play-btn">
+                        PLAY
+                    </button>
+                    <br>
+                    <div ALIGN=center>
+                        <script>show_ad();</script>
+                        <script>show_android_app();</script>
+                        <script>show_facebook_link();</script>
+                    </div>
+                    <!-- <button data-type="pic" class="btn play-btn">美图版</button> -->
+                </div>
+
+            </div>
+            <div class="page hide" id="room">
+                <header>
+                    <span class="lv">
+                        Score：
+                        <em>
+                            1
+                        </em>
+                    </span>
+                    <span class="time">
+                    </span>
+                    <span class="btn btn-pause">
+                        PAUSE
+                    </span>
+                </header>
+                <div id="box" class="lv1">
+                </div>
+            </div>
+            <div class="page hide" id="dialog">
+                <div class="inner">
+                    <div class="content share">
+                        <p>
+                            Score:
+                        </p>
+                        <h3></h3>
+                        <div class="btn-wrap">
+                            <a class="btn btn-boyaa" href="index.html#" onclick="javascript:do_share();">Share</a>
+                            <button class="btn btn-restart">
+                                Play Again
+                            </button>
+                            <a href="http://www.kunzmainali.com" class="btn btn-boyaa" target="_blank">Developer</a>
+                        </div>
+                        <br>
+                        <div ALIGN=center>
+                            <script>show_ad();</script>
+                            <script>show_android_app();</script>
+                            <script>show_facebook_link();</script>
+			            </div>
+                    </div>
+                    <div class="content gameover">
+                        <p>
+                            Score:
+                        </p>
+                        <h3></h3>
+                        <div class="btn-wrap">
+                            <button class="btn btn-restart">
+                                Play Again
+                            </button>
+                            <script>
+                            function tweet() {
+                                    var tweetText = "I reached Level " + (Game.lastLv+1) + " on Color Cognition"
+                                            + "\n via @ColorCognition";
+                                    var tweetUrl = "https://twitter.com/intent/tweet?text=" + tweetText + " &url=";
+                                    window.open(tweetUrl);
+                            }
+                            </script>
+                            <button class="btn btn-boyaa" onclick=tweet() >Share</button>
+                        </div>
+                        <br>
+                        <div ALIGN=center>
+                            <script>show_ad();</script>
+                            <script>show_android_app();</script>
+                            <script>show_facebook_link();</script>
+			            </div>
+                    </div>
+                    <div class="content pause">
+                        <h3>
+                            Pause Game
+                        </h3>
+                        <div class="btn-wrap">
+                            <button class="btn btn-resume">
+                                CONTINUE
+                            </button>
+                            
+                            <a href="http://www.kunzmainali.com" class="btn btn-boyaa" onclick="" target="_blank">Developer</a>
+                        </div>
+                        <br>
+                        <div ALIGN=center>
+                            <script>show_ad();</script>
+                            <script>show_android_app();</script>
+                            <script>show_facebook_link();</script>
+			            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '304417756396376',
+      xfbml      : true,
+      version    : 'v2.0'
+    });
+    FB.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        console.log('Logged in.');
+      } else {
+      }
+    });
+  };
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/zh_TW/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  function fb_share() {    
+    var msg = Game.lastLv>20?"Score，You made it to "【+Game.lastLv+1]:"This round is over";
+    if (confirm(msg)){
+      window.Game.share();
+    }
+  }
+  function do_share() {
+    var caption = Game.lastLv>0?"I got past"+(Game.lastLv+1)+"and beat"+Game.lastGamePercent+"% of People":shareData.tTitle;
+    FB.ui({
+        method: 'feed',
+        name: 'Color Cognition',
+        link: 'http://game.ioxapp.com/color/?f=fb_app',
+        picture: 'http://game.ioxapp.com/color/icon.png',
+        caption: caption,
+        description: 'Locate the block with a different color!',
+      }, function(response){});
+  }
+</script>
+</html>
+<script src="assets/js/libs.min.js"></script>
+<script src="assets/js/main.min.js"></script>
+<script src="assets/js/auto_ads.js"></script>
